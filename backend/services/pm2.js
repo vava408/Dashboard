@@ -7,4 +7,9 @@ function getNom(bots)
     }))
 }
 
-module.exports = {getNom}
+function getStats(bots, id)
+{
+    return bots[id].monit
+}
+
+module.exports = {getNom, getStats}
