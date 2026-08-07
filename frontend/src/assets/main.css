@@ -1,18 +1,5 @@
+@import './base.css';
 
 #app {
-  width: 100%;
   min-height: 100vh;
-  font-weight: normal;
-}
-
-a {
-  text-decoration: none;
-}
-
-body {
-  margin: 0;
-}
-
-a:hover {
-  text-decoration: none;
 }
