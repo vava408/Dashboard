@@ -1,0 +1,26 @@
+services:
+  vue:
+    build: .
+    container_name: vue-tailscale
+    restart: unless-stopped
+
+    ports:
+      - "8080:80"
+
+    environment:
+      TS_AUTHKEY: ${TS_AUTHKEY}
+      TS_HOSTNAME: ${TS_HOSTNAME:-vue-app}
+      TS_EXTRA_ARGS: ${TS_EXTRA_ARGS:-}
+
+    volumes:
+      - tailscale-state:/var/lib/tailscale
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    devices:
+      - /dev/net/tun:/dev/net/tun
+
+volumes:
+  tailscale-state:

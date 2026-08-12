@@ -1,44 +1,27 @@
-# frontend
+# Vue.js + Tailscale
 
-This template should help get you started developing with Vue 3 in Vite.
+## 1. Build the Vue application
 
-## Recommended IDE Setup
+This setup expects a standard Vue/Vite project containing:
+- package.json
+- package-lock.json
+- src/
+- and a `build` script producing `dist/`
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 2. Configure Tailscale
 
-## Recommended Browser Setup
+Copy `.env.example` to `.env` and set `TS_AUTHKEY` to a Tailscale auth key.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## 3. Start
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+docker compose up -d --build
 ```
 
-### Compile and Hot-Reload for Development
+The container joins your Tailscale network as `TS_HOSTNAME`.
 
-```sh
-npm run dev
-```
+Because nginx serves the Vue SPA on port 80, you can expose it through Tailscale using your preferred Tailscale access method.
 
-### Compile and Minify for Production
+## Important
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Do not commit `.env` to Git. The auth key is a secret.
