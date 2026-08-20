@@ -20,6 +20,8 @@ router.get("/stats", async (req, res) => {
     ]);
 
     const disk = fs[0];
+  const usedMemory = mem.total - (mem.available ?? mem.free);
+  const usedMemoryPercent = (usedMemory / mem.total) * 100;
 
     res.json({
       cpu: {
@@ -31,11 +33,11 @@ router.get("/stats", async (req, res) => {
 
       ram: {
         label : "RAM",
-        value: Number(((mem.used / mem.total) * 100).toFixed(1)),
-        text: `${((mem.used / mem.total) * 100).toFixed(1)}%`,
-        used: mem.used,
+        value: Number(usedMemoryPercent.toFixed(1)),
+        text: `${usedMemoryPercent.toFixed(1)}%`,
+        used: usedMemory,
         total: mem.total,
-        width: `${((mem.used / mem.total) * 100).toFixed(1)}%`
+        width: `${usedMemoryPercent.toFixed(1)}%`
       },
 
       temperature: {
