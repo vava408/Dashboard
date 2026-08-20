@@ -7,6 +7,8 @@ ModuleRegistry.registerModules([AllCommunityModule])
 
 const info = ref([])
 const INTERVALLE = 5000
+const API_IP = import.meta.env.API_IP
+const API_PORT = import.meta.env.API_PORT || 5000
 let interval = null
 let chart = null
 let infoGraphique = []
@@ -91,7 +93,7 @@ onMounted(async () => {
 
 async function getStatServeur() {
   try {
-    const response = await fetch('http://localhost:5000/api/system/stats')
+    const response = await fetch(`http://${API_IP}:${API_PORT}/api/system/stats`)
     if (!response.ok) {
       throw new Error('Impossible de charger les statistiques')
     }
