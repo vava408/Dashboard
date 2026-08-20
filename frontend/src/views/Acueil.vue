@@ -7,8 +7,8 @@ ModuleRegistry.registerModules([AllCommunityModule])
 
 const info = ref([])
 const INTERVALLE = 5000
-const API_IP = import.meta.env.API_IP
-const API_PORT = import.meta.env.API_PORT || 5000
+const API_IP = import.meta.env.VITE_API_IP
+const API_PORT = import.meta.env.VITE_API_PORT || 5000
 let interval = null
 let chart = null
 let infoGraphique = []
