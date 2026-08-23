@@ -93,7 +93,7 @@ onMounted(async () => {
 
 async function getStatServeur() {
   try {
-    const response = await fetch(`http://${API_IP}:${API_PORT}/api/system/stats`)
+    const response = await fetch("/api/system/stats")
     if (!response.ok) {
       throw new Error('Impossible de charger les statistiques')
     }

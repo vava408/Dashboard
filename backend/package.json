@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js"
-
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,7 @@
     "dockerode": "^5.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "pm2": "^7.0.1",
+    "pm2": "^7.0.3",
     "systeminformation": "^5.31.7"
   },
   "devDependencies": {
