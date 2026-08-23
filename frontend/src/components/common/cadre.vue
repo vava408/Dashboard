@@ -19,30 +19,37 @@ const props = defineProps({
 
 <style scoped>
 .cadre {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  padding: 10px 12px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(8px);
-  max-width: 180px;
+  min-width: 0;
+  min-height: 118px;
+  background: #0d1522;
+  border: 1px solid #1c293b;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(2, 7, 17, 0.18);
+  overflow: hidden;
   width: 100%;
-  max-height: 180px;
-  height: 100%;
-
 }
 
 h3 {
-  margin: 0 0 4px;
-  color: #f5f7fb;
-  font-size: 0.9rem;
+  margin: 0 0 8px;
+  color: #7f8da5;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .value {
   margin: 0;
-  color: #ffffff;
-  font-size: 1rem;
+  color: #f0f4fb;
+  font-size: 1.55rem;
   font-weight: 700;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 18px;
+  margin-top: 8px;
 }
 
 .details {
