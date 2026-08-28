@@ -3,7 +3,8 @@ function getNom(bots)
     console.log(bots)
     return bots.map(bot => ({
         id: bot.pid,
-        name: bot.name
+        name: bot.name,
+        status: bot.pm2_env?.status
     }))
 }
 
