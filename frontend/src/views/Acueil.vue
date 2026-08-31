@@ -60,7 +60,10 @@ onMounted(async () => {
 
   await getStatServeur()
   await getPm2()
-  interval = setInterval(getStatServeur, 5000)
+  interval = setInterval(async () => {
+    await getStatServeur();
+    await getPm2();
+}, 5000);
 })
 
 onUnmounted(() => {
@@ -160,7 +163,9 @@ function setCpuTemp(point) {
             <span>Total serveurs Discord</span><strong></strong><small>sur tous vos bots</small>
           </div>
           <div><span>Utilisateurs</span><strong></strong><small>sur tous vos bots</small></div>
+          <div><span>Uptime</span><strong>{{ uptime[0]?.text }}</strong><small>Durée de fonctionnement</small></div>
         </div>
+
       </section>
     </main>
   </div>

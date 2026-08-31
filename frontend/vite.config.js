@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: `http://${process.env.VITE_API_IP || '192.168.1.26'}:${process.env.VITE_API_PORT || 5000}`,
+        target: `http://${process.env.VITE_API_IP || '100.107.194.109'}:${process.env.VITE_API_PORT || 5000}`,
         changeOrigin: true,
       },
     },

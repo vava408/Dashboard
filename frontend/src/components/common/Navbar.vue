@@ -9,12 +9,12 @@
       <p class="nav-label">Workspace</p>
       <RouterLink to="/home" class="nav-item active"><span class="nav-icon">▦</span>Dashboard</RouterLink>
       <p class="nav-label">Monitoring</p>
-      <a class="nav-item" href="#monitoring"><span class="nav-icon">◒</span>Système</a>
+      <a class="nav-item" href="/systheme"><span class="nav-icon">◒</span>Système</a>
       <a class="nav-item" href="#monitoring"><span class="nav-icon">⌁</span>Réseau</a>
       <a class="nav-item" href="#monitoring"><span class="nav-icon">◫</span>Stockage</a>
       <p class="nav-label">Gestion</p>
       <a class="nav-item" href="#bots"><span class="nav-icon">◉</span>Bots Discord <span class="nav-count">4</span></a>
-      <a class="nav-item" href="#processus"><span class="nav-icon">◌</span>PM2</a>
+      <a class="nav-item" href="/pm2"><span class="nav-icon">◌</span>PM2</a>
       <a class="nav-item" href="#docker"><span class="nav-icon">◈</span>Docker</a>
       <a class="nav-item" href="#fichiers"><span class="nav-icon">□</span>Fichiers</a>
     </nav>
