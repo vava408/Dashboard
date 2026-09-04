@@ -142,8 +142,8 @@ async function stop(id) {
 
               <td>{{ process.pid }}</td>
               <td>{{ process.uptime }}</td>
-              <td>{{ process }}</td>
-              <td>2.1%</td>
+              <td>{{ process.monit.memory }}</td>
+              <td>{{ process.monit.cpu }}</td>
 
               <td class="actions">
                 <button @click="restart(process.id)" class="action-btn restart" title="Redémarrer">
