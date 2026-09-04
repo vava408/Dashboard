@@ -2,7 +2,8 @@ function getNom(bots)
 {
     console.log(bots)
     return bots.map(bot => ({
-        id: bot.pid,
+		id: bot.pm_id,
+		pid: bot.pid,
         name: bot.name,
         status: bot.pm2_env?.status,
         monit: bot.monit,

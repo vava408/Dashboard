@@ -25,6 +25,93 @@ async function getPm2() {
   }
 
 }
+
+async function restart(id) {
+    try {
+        const response = await fetch("/api/bots/restart?botId=" + id );
+
+        if (response == false) {
+            window.dispatchEvent(
+  				new CustomEvent("notify", {
+    				detail: {
+      					type: "error",
+      					message: "Erreur le bot ne redemarera pas..."
+    				}
+  				})
+			);
+            return;
+        }
+
+        window.dispatchEvent(
+  				new CustomEvent("notify", {
+    				detail: {
+      					type: "success",
+      					message: "Bot redémarré avec succès !"
+    				}
+  				})
+			);
+    } catch (error) {
+        notify("error", "Impossible de contacter le serveur");
+    }
+}
+
+async function supprimer(id) {
+    try {
+        const response = await fetch("/api/bots/restart?botId=" + id );
+
+        if (response.success == false) {
+            window.dispatchEvent(
+  				new CustomEvent("notify", {
+    				detail: {
+      					type: "error",
+      					message: "Erreur le bot ne redemarera pas..."
+    				}
+  				})
+			);
+            return;
+        }
+
+        window.dispatchEvent(
+  				new CustomEvent("notify", {
+    				detail: {
+      					type: "success",
+      					message: "Bot redémarré avec succès !"
+    				}
+  				})
+			);
+    } catch (error) {
+        notify("error", "Impossible de contacter le serveur");
+    }
+}
+
+async function stop(id) {
+    try {
+        const response = await fetch("/api/bots/stop?botId=" + id );
+
+        if (response == false) {
+            window.dispatchEvent(
+  				new CustomEvent("notify", {
+    				detail: {
+      					type: "error",
+      					message: "Erreur le bot ne s'arrete pas..."
+    				}
+  				})
+			);
+            return;
+        }
+
+        window.dispatchEvent(
+  				new CustomEvent("notify", {
+    				detail: {
+      					type: "success",
+      					message: "Bot arreter avec succès !"
+    				}
+  				})
+			);
+    } catch (error) {
+        notify("error", "Impossible de contacter le serveur");
+    }
+}
 </script>
 
 <template>
@@ -53,21 +140,21 @@ async function getPm2() {
                 <span :class="process.status"> ● {{ process.status }}</span>
               </td>
 
-              <td>{{ process.id }}</td>
+              <td>{{ process.pid }}</td>
               <td>{{ process.uptime }}</td>
-              <td>112 MB</td>
+              <td>{{ process }}</td>
               <td>2.1%</td>
 
               <td class="actions">
-                <button class="action-btn restart" title="Redémarrer">
+                <button @click="restart(process.id)" class="action-btn restart" title="Redémarrer">
                   ↻
                 </button>
 
-                <button class="action-btn stop" title="Arrêter">
+                <button @click="stop(process.id)" class="action-btn stop" title="Arrêter">
                   ■
                 </button>
 
-                <button class="action-btn delete" title="Supprimer">
+                <button @click="supprimer(process.id)" class="action-btn delete" title="Supprimer">
                   🗑
                 </button>
               </td>
