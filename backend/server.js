@@ -8,9 +8,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const explorer = require("./routes/explorer");
+
+app.use("/api", explorer.router);
 app.use("/api/system", require("./routes/system"));
 app.use("/api/bots", require("./routes/bots"));
-
+app.use("/api/docker", require("./routes/docker"));
+app.get("/docs", explorer.renderExplorer);
 
 app.get("/", (req, res) => {
     res.json({
