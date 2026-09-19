@@ -4,8 +4,8 @@ const { dockerPs} = require("../services/docker");
 
 router.get("/getDockerContainers", (req, res) => {
 	res.json({
-		docker: dockerPs
+		docker: dockerPs()
 	})
 });
 
-module.exports = router;
+module.exports = router;	

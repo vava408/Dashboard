@@ -1,16 +1,31 @@
 const { execSync } = require('child_process');
 
-
 function dockerPs()
 {
-	try {
-		// Exemple avec une commande qui renvoie du texte ou du JSON (ex: uname)
-		const sortieBrute = execSync('uname -a', { encoding: 'utf-8' })
-	
-		return sortieBrute;
-	} catch (error) {
-		console.error(JSON.stringify({ status: 'erreur', message: error.message }));
-	}
+    try {
+        const sortieBrute = execSync('docker ps --format "{{.ID}}|{{.Image}}|{{.Command}}|{{.CreatedAt}}|{{.Status}}|{{.Ports}}|{{.Names}}"',{
+            encoding: 'utf-8'
+        });
+		console.log(sortieBrute);
+		
+		sortiePropre = getSortiePropre(sortieBrute)
+
+        return sortiePropre;
+    } catch (error) {
+        console.error('Erreur Docker :');
+        console.error(error.message);
+        console.error(error.stderr?.toString());
+    }
+}
+//0 CONTAINER 1 ID, 2 Images, 3 COMMAND, 4 CREATED, 5 STATUS, 6 PORT,  7 NAMES
+function getSortiePropre(sortieBrute)
+{
+	var sortie;
+	sortie = sortieBrute.trim().split('\n').map(ligne => ligne.split('|'));
+	return sortie
 }
 
-module.exports = { dockerPs }
+
+
+module.exports = { dockerPs };
+
