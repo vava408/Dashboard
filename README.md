@@ -133,7 +133,7 @@ Une fois le projet démarré, ouvrez l'interface web et allé a l'url http://loc
 - notifications d'alertes
 - optimisation du système de monitoring
 
-## Plus de détaille
+## Plus de détail
 
 Aller voir le readme du frontend pour plus de detaille dessus
 
