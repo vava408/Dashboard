@@ -9,7 +9,10 @@ const endpoints = [
     { method: "GET", path: "/api/bots/start?botId=0", label: "Démarrer un bot", description: "Démarre le bot PM2 indiqué." },
     { method: "GET", path: "/api/bots/stop?botId=0", label: "Arrêter un bot", description: "Arrête le bot PM2 indiqué." },
     { method: "GET", path: "/api/bots/restart?botId=0", label: "Redémarrer un bot", description: "Redémarre le bot PM2 indiqué." },
-	{ method: "GET", path: "/api/docker/getDockerContainers", label: "Obtenir les conteneurs Docker", description: "Retourne la liste des conteneurs Docker." }
+	{ method: "GET", path: "/api/docker/getDockerContainers", label: "Obtenir les conteneurs Docker", description: "Retourne la liste des conteneurs Docker." },
+	{ method: "GET", path: "/api/bdd/test", label: "Obtenir l'état de connexion de la BDD", description: "Obtenir l'état de connexion de la BDD." },
+    { method: "GET", path: "/api/bdd/creerBot?processPM2=0&nomBot=0", label: "Créer une sauvegarde de bot", description: "Crée une sauvegarde de bot." },
+
 ];
 
 router.get("/", (req, res) => {
@@ -84,9 +87,13 @@ endpoints.forEach((endpoint, index) => {
     const card = document.createElement('article');
     card.className = 'endpoint';
     const needsBotId = endpoint.path.includes('botId');
+    const needsProcessPM2 = endpoint.path.includes('processPM2');
+    const needsNomBot = endpoint.path.includes('nomBot');
     card.innerHTML = '<div class="endpoint-top"><span class="method">' + endpoint.method + '</span><code>' + endpoint.path + '</code></div>' +
         '<p>' + endpoint.description + '</p>' +
         '<div class="field' + (needsBotId ? ' visible' : '') + '"><label for="bot-' + index + '">botId</label><input id="bot-' + index + '" value="0" inputmode="numeric"></div>' +
+        '<div class="field' + (needsProcessPM2 ? ' visible' : '') + '"><label for="process-' + index + '">processPM2</label><input id="process-' + index + '" value="0"></div>' +
+        '<div class="field' + (needsNomBot ? ' visible' : '') + '"><label for="name-' + index + '">nomBot</label><input id="name-' + index + '" value="0"></div>' +
         '<button type="button">Exécuter</button>';
     card.querySelector('button').addEventListener('click', () => callEndpoint(endpoint, index));
     endpointContainer.appendChild(card);
@@ -94,7 +101,12 @@ endpoints.forEach((endpoint, index) => {
 
 async function callEndpoint(endpoint, index) {
     const botId = document.querySelector('#bot-' + index)?.value || '0';
-    const path = endpoint.path.replace('botId=0', 'botId=' + encodeURIComponent(botId));
+    const processPM2 = document.querySelector('#process-' + index)?.value || '0';
+    const nomBot = document.querySelector('#name-' + index)?.value || '0';
+    const path = endpoint.path
+        .replace('botId=0', 'botId=' + encodeURIComponent(botId))
+        .replace('processPM2=0', 'processPM2=' + encodeURIComponent(processPM2))
+        .replace('nomBot=0', 'nomBot=' + encodeURIComponent(nomBot));
     const startedAt = performance.now();
     status.textContent = 'Chargement...';
     result.textContent = '';

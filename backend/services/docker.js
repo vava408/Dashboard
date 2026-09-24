@@ -17,7 +17,7 @@ function dockerPs()
         console.error(error.stderr?.toString());
     }
 }
-//0 CONTAINER 1 ID, 2 Images, 3 COMMAND, 4 CREATED, 5 STATUS, 6 PORT,  7 NAMES
+
 function getSortiePropre(sortieBrute)
 {
 	var sortie;
