@@ -107,7 +107,7 @@ async function envoyerFormulaire(event)
 							<label>
 								<span>Bot</span>
 								<select id="mon-select">
-									<option v-for="choix in bot" :value="choix.name">{{ choix.name }}</option>
+									<option v-for="choix in bot" :value="choix.id">{{ choix.name }}</option>
 								</select>
 							</label>
 

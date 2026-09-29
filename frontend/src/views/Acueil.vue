@@ -92,7 +92,7 @@ async function getPm2() {
   try {
     const response = await fetch("/api/bots/getBots")
     const data = await response.json()
-    pm2.value =     bot.value = data.bots
+    pm2.value = data.bots
     bot.value = data.bots.filter(bot => !ProcessNonBOTPM2.includes(bot.name))
     botOnline.value = bot.value.filter(bot => bot.status === "online")
     console.log(botOnline.value)

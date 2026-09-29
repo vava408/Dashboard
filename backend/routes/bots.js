@@ -2,6 +2,7 @@ const router = require("express").Router();
 const pm2 = require("pm2");
 const fs = require("fs");
 const { getNom, getStats } = require("../services/pm2.js");
+const {  pool } = require("../data/login");
 
 router.get("/getBots", (req, res) => {
     pm2.connect((err) => {
@@ -140,5 +141,8 @@ router.get("/stats", (req, res) => {
         });
     });
 
-
+router.get("/saveBot", (req, res) => {
+    pool.execute("SELECT * FROM bot_discord")
+    
+})
 module.exports = router;
