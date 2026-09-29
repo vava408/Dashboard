@@ -20,6 +20,7 @@ async function getPm2() {
     const response = await fetch("/api/bots/getBots")
     const data = await response.json()
     pm2.value =data.bots
+    console.log(pm2.length)
   } catch (error) {
     console.log(error);
   }
@@ -158,6 +159,9 @@ async function stop(id) {
                   🗑
                 </button>
               </td>
+            </tr>
+            <tr v-if="pm2.length === 0">
+              <td colspan="6" class="empty">Aucun processus PM2 trouvé.</td>
             </tr>
           </tbody>
         </table>

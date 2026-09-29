@@ -90,4 +90,55 @@ router.get("/stats", async (req, res) => {
   }
 });
 
+
+router.get("/reseau", async (req, res) => {
+  try {
+    const [
+      wifi
+    ] = await Promise.all([
+      si.networkStats(process.env.CHOIX_RESEAU)
+    ]);
+
+    console.log(wifi[0])
+
+    res.json({
+      Up : wifi[0].rx_bytes,
+      Down : wifi[0].tx_bytes,
+    })
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Impossible de récupérer les statistiques."
+    });
+  }
+})
+
+router.get("/disk", async (req, res) => {
+  try {
+    const disks = await si.fsSize();
+    const total = disks.reduce((sum, disk) => sum + disk.size, 0);
+    const used = disks.reduce((sum, disk) => sum + disk.used, 0);
+
+    res.json({
+      total,
+      used,
+      available: total - used,
+      use: total > 0 ? (used / total) * 100 : 0,
+      disks: disks.map((disk) => ({
+        filesystem: disk.fs,
+        mount: disk.mount,
+        total: disk.size,
+        used: disk.used,
+        available: disk.available,
+        use: disk.use,
+      })),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Impossible de récupérer les statistiques."
+    });
+  }
+})
+
 module.exports = router;

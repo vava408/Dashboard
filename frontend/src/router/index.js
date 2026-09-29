@@ -4,6 +4,7 @@ import Home from '../views/Acueil.vue'
 import Systheme from '../views/Systheme.vue'
 import Pm2 from '../views/Pm2.vue'
 import Docker from '../views/Docker.vue'
+import Bot from '../views/Bot.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/docker',
       name: 'Docker',
       component: Docker,
+    },
+    {
+      path: '/bot',
+      name: 'bot',
+      component: Bot,
     },
   ],
 })
