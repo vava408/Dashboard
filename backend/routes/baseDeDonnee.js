@@ -27,7 +27,7 @@ router.post("/creerBot", upload.single("image"), async (req, res) =>
 {
     const processPM2 = req.body.processPM2;
     const nomBot = req.body.nomBot;
-    const image = req.file?.filename || null;
+    const image = req.file?.filename + ".png" || null;
     var etat = true;
     var erreur = "";
 
