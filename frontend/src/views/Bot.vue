@@ -29,53 +29,75 @@ try {
 
 async function envoyerFormulaire(event)
 {
-  event.preventDefault();
+    event.preventDefault();
 
-   let pm2 = document.getElementById("mon-select").value;
-	let nom = document.getElementById("nom-bot").value.trim();
+    const pm2 = document.getElementById("mon-select").value;
+    const nom = document.getElementById("nom-bot").value.trim();
+    const image = document.getElementById("image-bot").files[0];
 
-	if (!nom)
-   {
-      erreurForm.value = "Erreur dans le nom "
-		return;
-   }
+    if (!nom)
+    {
+        erreurForm.value = "Erreur dans le nom";
+        return;
+    }
 
-	try {
-	  const response = await fetch(`/api/bdd/creerBot?processPM2=${encodeURIComponent(pm2)}&nomBot=${encodeURIComponent(nom)}`);
-	  const data = await response.json();
+    if (!image)
+    {
+        erreurForm.value = "Veuillez sélectionner une image";
+        return;
+    }
 
-	  if (response.ok && data.success)
-   {
-      window.dispatchEvent(
-  			new CustomEvent("notify", {
-    			detail: {
-      				type: "success",
-      				message: "Bot ajouté avec succès !"
-    				}
-  				})
-			);
-   }
-   else
-   {
-    window.dispatchEvent(
-  		new CustomEvent("notify", {
-    		detail: {
-      			type: "error",
-      			message: erreurForm
-    			}
-  			})
-			);
-   }
-	 } catch (error) {
-		 window.dispatchEvent(
-			 new CustomEvent("notify", {
-				 detail: {
-					 type: "error",
-					 message: "Impossible de contacter le serveur"
-				 }
-			 })
-		 );
-	 }
+    const formData = new FormData();
+
+    formData.append("processPM2", pm2);
+    formData.append("nomBot", nom);
+    formData.append("image", image);
+
+    try
+    {
+        const response = await fetch("/api/bdd/creerBot", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success)
+        {
+            window.dispatchEvent(
+                new CustomEvent("notify", {
+                    detail: {
+                        type: "success",
+                        message: "Bot ajouté avec succès !"
+                    }
+                })
+            );
+        }
+        else
+        {
+            window.dispatchEvent(
+                new CustomEvent("notify", {
+                    detail: {
+                        type: "error",
+                        message: data.message || "Erreur lors de la création du bot"
+                    }
+                })
+            );
+        }
+    }
+    catch (error)
+    {
+        console.error(error);
+
+        window.dispatchEvent(
+            new CustomEvent("notify", {
+                detail: {
+                    type: "error",
+                    message: "Impossible de contacter le serveur"
+                }
+            })
+        );
+    }
 }
 </script>
 
@@ -107,7 +129,7 @@ async function envoyerFormulaire(event)
 							<label>
 								<span>Bot</span>
 								<select id="mon-select">
-									<option v-for="choix in bot" :value="choix.id">{{ choix.name }}</option>
+									<option v-for="choix in bot" :value="choix.name">{{ choix.name }}</option>
 								</select>
 							</label>
 

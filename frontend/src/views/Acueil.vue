@@ -25,7 +25,7 @@ const pm2 = ref([])
 onMounted(async () => {
   chart = AgCharts.create({
     container: document.getElementById('grapheCPU'),
-    title: { text: 'Température CPU', color: '#e2e8f0', fontSize: 16, fontWeight: 600 },
+    title: { text: 'Utilisation CPU', color: '#e2e8f0', fontSize: 16, fontWeight: 600 },
     background: { fill: 'rgba(12, 18, 29, 0.9)' },
     data: [],
     series: [
@@ -49,7 +49,7 @@ onMounted(async () => {
       y: {
         type: 'number',
         position: 'left',
-        title: { text: 'Température (°C)', color: '#cbd5e1' },
+        title: { text: 'Utilisation CPU (%)', color: '#cbd5e1' },
         gridStyle: [{ stroke: 'rgba(148, 163, 184, 0.18)' }],
         label: { color: '#cbd5e1' },
       },

@@ -1,5 +1,10 @@
 const router = require("express").Router();
 const { testConnection, pool } = require("../data/login");
+const multer = require("multer");
+
+const upload = multer({
+	dest: "uploads/"
+});
 
 router.get("/test", async (req, res) => {
     try {
@@ -18,7 +23,7 @@ router.get("/test", async (req, res) => {
     }
 });
 
-router.get("/creerBot", async (req, res) =>
+router.get("/creerBot", upload.single("image"), async (req, res) =>
 {
     const processPM2 = req.query.processPM2;
     const nomBot = req.query.nomBot;
