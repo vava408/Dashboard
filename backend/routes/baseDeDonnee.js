@@ -23,11 +23,11 @@ router.get("/test", async (req, res) => {
     }
 });
 
-router.get("/creerBot", upload.single("image"), async (req, res) =>
+router.post("/creerBot", upload.single("image"), async (req, res) =>
 {
-    const processPM2 = req.query.processPM2;
-    const nomBot = req.query.nomBot;
-    const image = req.query.image;
+    const processPM2 = req.body.processPM2;
+    const nomBot = req.body.nomBot;
+    const image = req.file?.filename || null;
     var etat = true;
     var erreur = "";
 
