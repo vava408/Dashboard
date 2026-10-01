@@ -23,7 +23,7 @@ router.get("/test", async (req, res) => {
     }
 });
 
-router.post("/creerBot", upload.single("image"), async (req, res) =>
+router.post("/creerBot", async (req, res) =>
 {
     const processPM2 = req.body.processPM2;
     const nomBot = req.body.nomBot;
@@ -38,6 +38,7 @@ router.post("/creerBot", upload.single("image"), async (req, res) =>
     }
     else
     {
+        upload.single(image+"png")
         const [bots] = await pool.execute(
             "SELECT * FROM bot_discord WHERE nom = ? AND process_pm2 = ?",
             [nomBot, processPM2]
