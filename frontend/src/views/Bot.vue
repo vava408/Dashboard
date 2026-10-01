@@ -142,7 +142,7 @@ async function envoyerFormulaire(event)
 								<span>Image</span>
 								<label class="image-input">
 									<span class="image-placeholder">Choisir une image</span>
-									<input id="image-bot" class="image-file" type="file" accept="image/*" />
+									<input id="image-bot" class="image-file" type="file" accept="image/png" />
 									<span class="upload-icon">↥</span>
 								</label>
 							</label>
