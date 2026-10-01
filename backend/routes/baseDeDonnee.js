@@ -1,9 +1,19 @@
 const router = require("express").Router();
 const { testConnection, pool } = require("../data/login");
 const multer = require("multer");
+const path = require("path");
+const crypto = require("crypto");
 
 const upload = multer({
-	dest: "uploads/"
+	storage: multer.diskStorage({
+		destination: path.join(__dirname, "../uploads"),
+		filename: (_req, _file, callback) => {
+			callback(null, `${crypto.randomUUID()}.png`);
+		}
+	}),
+	fileFilter: (_req, file, callback) => {
+		callback(null, file.mimetype === "image/png");
+	}
 });
 
 router.get("/test", async (req, res) => {
@@ -23,11 +33,11 @@ router.get("/test", async (req, res) => {
     }
 });
 
-router.post("/creerBot", async (req, res) =>
+router.post("/creerBot", upload.single("image"), async (req, res) =>
 {
     const processPM2 = req.body.processPM2;
     const nomBot = req.body.nomBot;
-    const image = req.file?.filename + ".png" || null;
+    const image = req.file?.filename || null;
     var etat = true;
     var erreur = "";
 
@@ -38,7 +48,6 @@ router.post("/creerBot", async (req, res) =>
     }
     else
     {
-        upload.single(image+"png")
         const [bots] = await pool.execute(
             "SELECT * FROM bot_discord WHERE nom = ? AND process_pm2 = ?",
             [nomBot, processPM2]
