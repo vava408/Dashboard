@@ -141,8 +141,28 @@ router.get("/stats", (req, res) => {
         });
     });
 
-router.get("/saveBot", (req, res) => {
-    pool.execute("SELECT * FROM bot_discord")
-    
-})
+router.get("/saveBot", async (req, res) => {
+    try {
+        const [bot] = await pool.execute(
+            "SELECT process_pm2, nom, image FROM bot_discord"
+        );
+
+        const bots = bot.map((b) => ({
+            process_pm2: b.process_pm2,
+            nom: b.nom,
+            image: `/uploads/${b.image}`
+        }));
+
+        res.json({
+            bot: bots
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            error: "Erreur lors de la récupération des bots"
+        });
+    }
+});
 module.exports = router;
