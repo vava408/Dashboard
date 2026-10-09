@@ -1,10 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Navbar from '../components/common/Navbar.vue'
 
+const pm2 = ref([])
 const bot = ref([])
 const isModalOpen = ref(false)
 const erreurForm = ref("")
+let refreshTimer
+
 
 function openModal() {
 	isModalOpen.value = true
@@ -19,13 +22,30 @@ async function getPm2() {
 try {
 	const response = await fetch("/api/bots/getBots")
 	const data = await response.json()
-	bot.value = data.bots || []
+	pm2.value = data.bots || []
 
   console.log(bot)
 } catch (error) {
 	console.log(error);
 }
 }
+
+async function getBot() {
+try {
+const response = await fetch("/api/bots/saveBot   ")
+const data = await response.json()
+bot.value = data.bot
+
+  console.log(data)
+} catch (error) {
+	console.log(error);
+}
+}
+
+onMounted(() => {
+  getBot()
+  refreshTimer = setInterval(getBot, 2000)
+})
 
 async function envoyerFormulaire(event)
 {
@@ -129,7 +149,7 @@ async function envoyerFormulaire(event)
 							<label>
 								<span>Bot</span>
 								<select id="mon-select">
-									<option v-for="choix in bot" :value="choix.name">{{ choix.name }}</option>
+									<option v-for="choix in pm2" :value="choix.name">{{ choix.name }}</option>
 								</select>
 							</label>
 
@@ -162,9 +182,43 @@ async function envoyerFormulaire(event)
 						<h2>Vos bots</h2>
 						<p>Les bots actifs sur votre serveur.</p>
 					</div>
-					<span class="bot-count">0 bot</span>
+					<span class="bot-count">{{ bot.length }} bot{{ bot.length > 1 ? 's' : '' }}</span>
 				</div>
-				<div class="empty-state">
+				<div v-if="bot.length" class="bot-table-wrapper">
+					<table class="bot-table">
+						<thead>
+							<tr>
+								<th>Nom du bot</th>
+								<th>Statut</th>
+								<th>Uptime</th>
+								<th>Serveurs</th>
+								<th>Utilisateurs</th>
+								<th>RAM</th>
+								<th>CPU</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="botItem in bot" :key="`${botItem.process_pm2}-${botItem.nom}`">
+								<td class="bot-identity">
+									<img class="bot-image" :src="`http://100.107.194.109:5000${botItem.image}`" :alt="`Image de ${botItem.nom}`" />
+									<span class="bot-name">{{ botItem.nom }}</span>
+								</td>
+								<td><span class="bot-status online"><span class="status-dot"></span>En ligne</span></td>
+								<td>—</td>
+								<td>—</td>
+								<td>—</td>
+								<td>—</td>
+								<td>—</td>
+								<td class="bot-actions">
+									<button type="button" class="table-action">↻</button>
+									<button type="button" class="table-action">⋮</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div v-else class="empty-state">
 					<div class="empty-icon">◉</div>
 					<h2>Aucun bot configuré</h2>
 					<p>Ajoutez votre premier bot pour commencer à le superviser avec PM2.</p>
@@ -305,6 +359,106 @@ h1 {
 .bot-count {
 	color: #8694a9;
 	font-size: 11px;
+}
+
+.bot-table-wrapper {
+	overflow-x: auto;
+}
+
+.bot-table {
+	width: 100%;
+	min-width: 820px;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.bot-table th,
+.bot-table td {
+	height: 48px;
+	padding: 0 14px;
+	text-align: left;
+	border-bottom: 1px solid #1b2735;
+	white-space: nowrap;
+}
+
+.bot-table th {
+	height: 42px;
+	color: #8e99a8;
+	background: #101923;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.bot-table td {
+	color: #c9d2e2;
+}
+
+.bot-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+.bot-table tbody tr:hover {
+	background: #111b28;
+}
+
+.bot-identity {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.bot-image {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border: 1px solid #2a394c;
+	border-radius: 6px;
+}
+
+.bot-name {
+	color: #eef3ff;
+	font-weight: 600;
+}
+
+.bot-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 4px 8px;
+	color: #4ade80;
+	background: rgba(34, 197, 94, 0.1);
+	border-radius: 5px;
+	font-size: 10px;
+	font-weight: 500;
+}
+
+.status-dot {
+	width: 5px;
+	height: 5px;
+	background: currentColor;
+	border-radius: 50%;
+}
+
+.bot-actions {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.table-action {
+	display: grid;
+	place-items: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	color: #aebbd0;
+	background: #182332;
+	border: 1px solid #2a394c;
+	border-radius: 5px;
+	font: inherit;
+	cursor: default;
 }
 
 .empty-state {
