@@ -13,7 +13,7 @@
       <a class="nav-item" href="#monitoring"><span class="nav-icon">⌁</span>Réseau</a>
       <a class="nav-item" href="#monitoring"><span class="nav-icon">◫</span>Stockage</a>
       <p class="nav-label">Gestion</p>
-      <a class="nav-item" href="#bots"><span class="nav-icon">◉</span>Bots Discord <span class="nav-count">4</span></a>
+      <a class="nav-item" href="/bot"><span class="nav-icon">◉</span>Bots Discord <span class="nav-count">0</span></a>
       <a class="nav-item" href="/pm2"><span class="nav-icon">◌</span>PM2</a>
       <RouterLink to="/docker" class="nav-item"><span class="nav-icon">◈</span>Docker</RouterLink>
       <a class="nav-item" href="#fichiers"><span class="nav-icon">□</span>Fichiers</a>
