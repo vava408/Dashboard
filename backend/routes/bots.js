@@ -116,7 +116,22 @@ router.get("/start", (req, res) => {
 
 router.get("/stats", (req, res) => {
   const bot = req.query.botId;
-  if (bot != undefined) {
+  if (bot === undefined) {
+    return res.status(400).json({
+      success: false,
+      error: "botId is required",
+    });
+  }
+
+  pm2.connect((connectError) => {
+    if (connectError) {
+      console.error(connectError);
+      return res.status(500).json({
+        success: false,
+        error: connectError.message,
+      });
+    }
+
     pm2.list((err, list) => {
       pm2.disconnect();
 
@@ -134,34 +149,18 @@ router.get("/stats", (req, res) => {
         });
       }
 
-      console.log(res);
+      const stats = getStats(list, bot);
+      if (stats === undefined) {
+        return res.status(404).json({
+          success: false,
+          error: `Bot ${bot} not found`,
+        });
+      }
+
       res.json({
         success: true,
-        bots: getStats(list, bot),
+        bots: stats,
       });
-    });
-  }
-  pm2.list((err, list) => {
-    pm2.disconnect();
-
-    if (err) {
-      console.error(err);
-
-      fs.writeFileSync(
-        `logs/Log_PM2_list.txt`,
-        `[${new Date().toISOString()}] ${err}\n`,
-      );
-
-      return res.status(500).json({
-        success: false,
-        error: err.message,
-      });
-    }
-
-    console.log(res);
-    res.json({
-      success: true,
-      bots: getStats(list, idBot),
     });
   });
 });
