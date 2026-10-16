@@ -32,7 +32,10 @@ function getTempsToString(tempsEnMs)
 
 function getStats(bots, id)
 {
-    return bots[id].monit
+    const bot = bots.find((process) => String(process.pm_id) === String(id))
+        || bots[Number(id)]
+
+    return bot?.monit
 }
 
 module.exports = {getNom, getStats}
