@@ -30,10 +30,12 @@ function getTempsToString(tempsEnMs)
     return resultat.trim()
 }
 
-function getStats(bots, id)
+function getStats(bots, identifier)
 {
-    const bot = bots.find((process) => String(process.pm_id) === String(id))
-        || bots[Number(id)]
+    const target = String(identifier)
+    const bot = bots.find((process) =>
+        String(process.pm_id) === target || String(process.name) === target)
+        || bots[Number(identifier)]
 
     return bot?.monit
 }
