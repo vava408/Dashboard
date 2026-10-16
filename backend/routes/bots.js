@@ -147,7 +147,7 @@ router.get("/stats", (req, res) => {
           success: false,
           error: err.message,
         });
-      }
+      } 
 
       const stats = getStats(list, bot);
       if (stats === undefined) {
