@@ -35,12 +35,14 @@ try {
 const response = await fetch("/api/bots/saveBot   ")
 const data = await response.json()
 bot.value = data.bot
+getStatBot(data.bot)
 
-  console.log(data)
+  //console.log(data.bot)
 } catch (error) {
 	console.log(error);
 }
 }
+
 
 onMounted(() => {
   getBot()
