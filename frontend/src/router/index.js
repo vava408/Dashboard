@@ -2,8 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginPage from '../views/LoginPage.vue'
 import Home from '../views/Acueil.vue'
 import Systheme from '../views/Systheme.vue'
-import Reseau from '../views/Reseau.vue'
-import Stockage from '../views/Stockage.vue'
 import Pm2 from '../views/Pm2.vue'
 import Docker from '../views/Docker.vue'
 import Bot from '../views/Bot.vue'
@@ -27,16 +25,6 @@ const router = createRouter({
       component: Systheme,
     },
     {
-      path: '/reseau',
-      name: 'Réseau',
-      component: Reseau,
-    },
-    {
-      path: '/stockage',
-      name: 'Stockage',
-      component: Stockage,
-    },
-        {
       path: '/pm2',
       name: 'PM2',
       component: Pm2,
