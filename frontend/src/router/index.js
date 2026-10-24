@@ -18,7 +18,7 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: Home,
-    },
+    } ,
     {
       path: '/systeme',
       name: 'système',
