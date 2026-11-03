@@ -1,15 +1,14 @@
 const { pool } = require("../data/login");
 
 
-function login(username , password)
+async function login(username, password)
 {
-    const user = pool.execute("SELECT * FROM user WHERE username = ?", [username]);
+    const [rows] = await pool.execute(
+        "SELECT * FROM `user` WHERE username = ? AND password = ? LIMIT 1",
+        [username, password]
+    );
 
-    if (user && user.password === password) {
-        return true;
-    } else {
-        return false;
-    }
+    return rows[0] || null;
 }
 
 module.exports = { login };

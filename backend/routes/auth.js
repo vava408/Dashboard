@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { pool } = require("../data/login");
 const { login } = require("../services/auth");
 
 
@@ -9,8 +8,8 @@ router.get("/login", async (req, res) => {
     const password = req.query.password;
 
     try {
-        const etat = await login(username, password);
-        if (etat) {
+        const user = await login(username, password);
+        if (user) {
             res.json({ success: true, user });
         } else {
             res.status(401).json({ success: false, message: "Identifiants incorrects" });

@@ -1,9 +1,15 @@
 <script setup>
 const features = ['Supervision temps réel', 'Accès sécurisé', 'Gestion des bots et serveurs']
 
-function login()
+async function login(event)
 {
-  
+  const formData = new FormData(event.currentTarget)
+  const params = new URLSearchParams({
+    username: formData.get('email'),
+    password: formData.get('password'),
+  })
+
+  await fetch(`/api/login/login?${params}`)
 }
 </script>
 
@@ -21,7 +27,7 @@ function login()
       <p class="subtitle">Accédez à votre espace de pilotage en quelques secondes.</p>
 
       <div class="login-panel">
-        <form class="login-form">
+        <form class="login-form" @submit.prevent="login">
           <label>
             <span>Adresse e-mail</span>
             <input type="text" name="email" placeholder="you@example.com" autocomplete="email" />
