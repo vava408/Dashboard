@@ -1,5 +1,10 @@
 <script setup>
 const features = ['Supervision temps réel', 'Accès sécurisé', 'Gestion des bots et serveurs']
+
+function login()
+{
+  
+}
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const features = ['Supervision temps réel', 'Accès sécurisé', 'Gestion des b
         <form class="login-form">
           <label>
             <span>Adresse e-mail</span>
-            <input type="email" name="email" placeholder="you@example.com" autocomplete="email" />
+            <input type="text" name="email" placeholder="you@example.com" autocomplete="email" />
           </label>
 
           <label>

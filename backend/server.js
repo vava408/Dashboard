@@ -16,6 +16,7 @@ app.use("/api/system", require("./routes/system"));
 app.use("/api/bots", require("./routes/bots"));
 app.use("/api/docker", require("./routes/docker"));
 app.use("/api/bdd", require("./routes/baseDeDonnee"));
+app.use("/api/login", require("./routes/auth"));
 app.get("/docs", explorer.renderExplorer);
 
 app.get("/", (req, res) => {
