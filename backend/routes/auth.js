@@ -2,10 +2,13 @@ const router = require("express").Router();
 const { login } = require("../services/auth");
 
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
 
-    const username = req.query.username;
-    const password = req.query.password;
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ success: false, message: "Nom d'utilisateur et mot de passe requis" });
+    }
 
     try {
         const user = await login(username, password);
