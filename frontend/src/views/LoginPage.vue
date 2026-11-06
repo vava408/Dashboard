@@ -1,15 +1,41 @@
 <script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 const features = ['Supervision temps réel', 'Accès sécurisé', 'Gestion des bots et serveurs']
+const router = useRouter()
+const errorMessage = ref('')
+const isLoading = ref(false)
 
 async function login(event)
 {
   const formData = new FormData(event.currentTarget)
-  const params = new URLSearchParams({
-    username: formData.get('email'),
-    password: formData.get('password'),
-  })
+  errorMessage.value = ''
+  isLoading.value = true
 
-  await fetch(`/api/login/login?${params}`)
+  try {
+    const response = await fetch('/api/login/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: formData.get('email'),
+        password: formData.get('password'),
+      }),
+    })
+
+    const result = await response.json()
+
+    if (!response.ok || !result.success) {
+      errorMessage.value = result.message || 'Identifiants incorrects'
+      return
+    }
+
+    await router.push('/home')
+  } catch {
+    errorMessage.value = 'Impossible de joindre le serveur'
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -35,7 +61,7 @@ async function login(event)
 
           <label>
             <span>Mot de passe</span>
-            <input type="password" name="password" placeholder="••••••••••" autocomplete="current-password" />
+            <input type="password" name="password" placeholder="••••••••••" autocomplete="current-password" required />
           </label>
 
           <div class="login-row">
@@ -47,7 +73,11 @@ async function login(event)
             <a href="#">Mot de passe oublié ?</a>
           </div>
 
-          <button type="submit" class="login-button">Se connecter</button>
+          <p v-if="errorMessage" class="login-error" role="alert">{{ errorMessage }}</p>
+
+          <button type="submit" class="login-button" :disabled="isLoading">
+            {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+          </button>
         </form>
 
         <div class="login-separator">ou</div>
