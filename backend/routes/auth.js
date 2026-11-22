@@ -13,12 +13,18 @@ router.post("/login", async (req, res) => {
     try {
         const user = await login(username, password);
         if (user) {
-            res.json({ success: true, user });
+            res.json({ success: true, user: user.user, token: user.token });
         } else {
             res.status(401).json({ success: false, message: "Identifiants incorrects" });
         }
     } catch (error) {
         console.error("Erreur lors de la connexion :", error);
+        if (error.message === "JWT_SECRET_MANQUANT") {
+            return res.status(503).json({
+                success: false,
+                message: "Authentification JWT non configurée"
+            });
+        }
         res.status(500).json({ success: false, message: "Erreur serveur" });
     }
 
