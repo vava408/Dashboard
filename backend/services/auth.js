@@ -1,7 +1,7 @@
 const { pool } = require("../data/login");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET || "votre_clé_secrète"; 
+const JWT_SECRET = process.env.JWT_SECRET; 
 
 
 if (!JWT_SECRET) {
