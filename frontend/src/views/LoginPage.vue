@@ -30,7 +30,7 @@ async function login(event)
       return
     }
 
-frontend/src/views/LoginPage.vue README.md    localStorage.setItem('accessToken', result.token)
+localStorage.setItem('accessToken', result.token)
     await router.push('/home')
   } catch {
     errorMessage.value = 'Impossible de joindre le serveur'
