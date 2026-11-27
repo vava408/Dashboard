@@ -126,3 +126,6 @@ frontend/
 ```
 
 Le fichier `.env` peut contenir des secrets : ne le commitez pas dans Git.
+
+- [README du projet](../README.md)
+- [Documentation backend](../backend/README.md)

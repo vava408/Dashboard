@@ -136,5 +136,6 @@ Une fois le projet démarré, ouvrez l'interface web et allé a l'url http://loc
 ## Plus de détail
 
 Aller voir le readme du frontend pour plus de detaille dessus
-
+- [Documentation frontend](../frontend/README.md)
 Aller voir le readme du backend pour plus de detaille dessus
+- [Documentation backend](../backend/README.md)
